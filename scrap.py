@@ -36,13 +36,10 @@ print("1) Female")
 print("2) Female and unknown")
 print("3) Male")
 print("4) Male and unknown")
+print("5) Unknown only")
 maleOrFemale = int(input())
 print("")
 print("")
-followerLimit = 99999999999999
-followerLimit = int(input("Follower limit?:"))
-if followerLimit == 0:
-    followerLimit = 99999999999999
 
 
 #reading datasets
@@ -73,24 +70,9 @@ def isMale(name):
             return True
     return False
 
-def printArr(arr, ftype):
-    print("---  DISPLAYING ALL",ftype,"  ---")
-    i = 0
-    for user in arr:
-        i+=1
-        if ftype == "UNKNOWN":
-            print(i, ")   ", (user.full_name or user.username), "               (https://www.instagram.com/"+user.username+")          ", unidecode(user.full_name.upper() or user.username.upper()).replace('.', '').replace('_', ' ').replace("'", '').split(' ', 1)[0].replace('_', '').replace('~', '').replace('!', '').replace('*', '').replace('0', '').replace('1', '').replace('2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace('7', '').replace('8', '').replace('9', '').strip())
-        else:
-            print(i, ")   ", (user.full_name or user.username), "               (https://www.instagram.com/"+user.username+")")
-    
-
-
-
 print("Retreaving metadata from profile, please stand by...")
 #SORTING FEMALE, MALE, UNKNOWN
-female_followers = []
-male_followers = []
-unknown_followers = []
+
 if displayType == 1:
     toDisplay = profile.get_followers()
     print("Loading follower list...")
@@ -100,41 +82,24 @@ elif displayType == 2:
 
 i = 0
 for followee in toDisplay:
-    user = unidecode(followee.full_name.upper() or followee.username.upper()).replace('.', '').replace('_', ' ').replace("'", '').split(' ', 1)[0].replace('_', '').replace('~', '').replace('!', '').replace('*', '').replace('0', '').replace('1', '').replace('2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace('7', '').replace('8', '').replace('9', '').strip()
+    user = unidecode(followee.full_name.upper() or followee.username.upper()).replace('.', '').replace('-','').replace('(','').replace(')','').replace('@','').replace('[','').replace(']','').replace('_', ' ').replace("'", '').split(' ', 1)[0].replace('_', '').replace('~', '').replace('!', '').replace('*', '').replace('0', '').replace('1', '').replace('2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace('7', '').replace('8', '').replace('9', '').replace('#', '').strip()
     i+=1
     
-    if followee.followers <= followerLimit:
-        if maleOrFemale == 1 and isFemale(user):
-            print("("+str(i),"/",str(profile.followers)+")    ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")")
-            female_followers.append(followee)
-        elif maleOrFemale == 2:
-            if isFemale(user):
-                print("("+str(i),"/",str(profile.followers)+")  (fem)  ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")")
-                female_followers.append(followee)
-            elif not isMale(user):
-                print("("+str(i),"/",str(profile.followers)+")  (unk)  ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")          ", unidecode(followee.full_name.upper() or followee.username.upper()).replace('.', '').replace('_', ' ').replace("'", '').split(' ', 1)[0].replace('_', '').replace('~', '').replace('!', '').replace('*', '').replace('0', '').replace('1', '').replace('2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace('7', '').replace('8', '').replace('9', '').strip())
-                unknown_followers.append(followee)
-        elif maleOrFemale == 3 and isMale(user):
-            print("("+str(i),"/",str(profile.followers)+")    ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")")
-            male_followers.append(followee)
-        elif maleOrFemale == 4:
-            if isMale(user):
-                print("("+str(i),"/",str(profile.followers)+")  (man)  ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")")
-                male_followers.append(followee)
-            elif not isFemale(user):
-                print("("+str(i),"/",str(profile.followers)+")  (unk)  ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")          ", unidecode(followee.full_name.upper() or followee.username.upper()).replace('.', '').replace('_', ' ').replace("'", '').split(' ', 1)[0].replace('_', '').replace('~', '').replace('!', '').replace('*', '').replace('0', '').replace('1', '').replace('2', '').replace('3', '').replace('4', '').replace('5', '').replace('6', '').replace('7', '').replace('8', '').replace('9', '').strip())
-                unknown_followers.append(followee)
-    
-    
-
-
-if maleOrFemale == 1:
-    printArr(female_followers, "FEMALE")
-elif maleOrFemale == 2:
-    printArr(female_followers, "FEMALE")
-    printArr(unknown_followers, "UNKNOWN")
-elif maleOrFemale == 3:
-    printArr(male_followers, "MALE")
-elif maleOrFemale == 4:
-    printArr(male_followers, "MALE")
-    printArr(unknown_followers, "UNKNOWN")
+    #if followee.followers <= followerLimit:
+    if maleOrFemale == 1 and isFemale(user):
+        print("(",str(i),")    ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")")
+    elif maleOrFemale == 2:
+        if isFemale(user):
+            print("(",str(i),")  (fem)  ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")")
+        elif not isMale(user):
+            print("(",str(i),")  (unk)  ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")          ", user)
+    elif maleOrFemale == 3 and isMale(user):
+        print("(",str(i),")    ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")")
+    elif maleOrFemale == 4:
+        if isMale(user):
+            print("(",str(i),")  (man)  ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")")
+        elif not isFemale(user):
+            print("(",str(i),")  (unk)  ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")          ", user)
+    elif maleOrFemale == 5 and not isFemale(user) and not isMale(user):
+        print("(",str(i),")  (unk)  ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")          ", user)
+        
