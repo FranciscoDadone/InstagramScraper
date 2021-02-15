@@ -8,3 +8,5 @@ To run the app, open a terminal and run:
 ```bash
 python3 scrape.py
 ```
+
+![](githubImages/unknown.png)
