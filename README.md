@@ -9,4 +9,4 @@ To run the app, open a terminal and run:
 python3 scrape.py
 ```
 
-![](githubImages/unknown.png)
+![](unknown.png)
