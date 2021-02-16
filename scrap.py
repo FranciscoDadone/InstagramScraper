@@ -1,18 +1,20 @@
 import instaloader
 import csv
-import sys
 from unidecode import unidecode
 import getpass 
 import webbrowser
 
-# MacOS
-#chrome_path = 'open -a /Applications/Google\ Chrome.app %s'
-
-# Windows
-# chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
-
-# Linux
-chrome_path = '/usr/bin/google-chrome %s'
+print("Select OS:")
+print("1) Linux")
+print("2) Windows")
+print("3) MacOS")
+os = int(input())
+if os == 1:
+    chrome_path = '/usr/bin/google-chrome %s'
+elif os == 2:
+    chrome_path = 'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s'
+elif os == 3:
+    chrome_path = 'open -a /Applications/Google\ Chrome.app %s'
 
 
 L = instaloader.Instaloader()
