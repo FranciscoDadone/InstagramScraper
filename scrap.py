@@ -4,6 +4,7 @@ from unidecode import unidecode
 import getpass 
 import webbrowser
 import platform
+import math
 
 os = platform.system()
 if os == 'Linux':
@@ -40,19 +41,19 @@ def profileElegible(followee):
     return elegible
 
 def openProfilesChrome(urls):
-    tabs_n = input("How many tabs to open in the browser time at a time? ")
+    tabs_n = int(input("How many tabs to open in the browser time at a time? "))
     j = 0
     tabsOpened = 0
+    numerOfProfilesToOpen = len(urls)
     for i in urls:
         j+=1
-        
         url = "https://www.instagram.com/" + i
         webbrowser.get(chrome_path).open(url)
         tabsOpened+=1
-        if j == int(tabs_n):
-            input("Continue? (Enter)")
+        if j == tabs_n:
+            input("Continue? (Enter) " + str(tabsOpened) + "/" + str(len(urls)) + " ( " + str(math.ceil(numerOfProfilesToOpen / tabs_n)) + " more )")
             j = 0
-    print("Total tabs opened:", tabsOpened)
+            numerOfProfilesToOpen -= tabs_n
 
 def storeProfile(username, option):
     if option == 1 or option == 3:
