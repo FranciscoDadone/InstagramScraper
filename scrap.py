@@ -1,6 +1,10 @@
-import instaloader
+try:
+    import instaloader
+    from unidecode import unidecode
+except:
+    print("Use the command 'pip install -r requirements.txt' to install all the dependencies")
+
 import csv
-from unidecode import unidecode
 import getpass 
 import webbrowser
 import platform
@@ -41,7 +45,7 @@ def profileElegible(followee):
     return elegible
 
 def openProfilesChrome(urls):
-    tabs_n = int(input("How many tabs to open in the browser time at a time? "))
+    tabs_n = int(input("How many tabs to open in the browser time at a time? (make sure to have a browser opened)"))
     j = 0
     tabsOpened = 0
     numerOfProfilesToOpen = len(urls)
@@ -51,7 +55,7 @@ def openProfilesChrome(urls):
         webbrowser.get(chrome_path).open(url)
         tabsOpened+=1
         if j == tabs_n:
-            input("Continue? (Enter) " + str(tabsOpened) + "/" + str(len(urls)) + " ( " + str(math.ceil(numerOfProfilesToOpen / tabs_n)) + " more )")
+            input("Continue? (Enter) " + str(tabsOpened) + "/" + str(len(urls)) + " ( " + str(math.ceil(numerOfProfilesToOpen / tabs_n) - 1) + " more )")
             j = 0
             numerOfProfilesToOpen -= tabs_n
 
@@ -180,7 +184,7 @@ if profilesOption != 2:
             storeProfile(followee.username, profilesOption)
             elegible+=1
         elif maleOrFemale == 6 and isFemale(user):
-            if profileElegible(followee):
+            if profileElegible(followee) and not followee.followed_by_viewer:
                 print("(",str(i),")    ", (followee.full_name or followee.username), "               (https://www.instagram.com/"+followee.username+")")
                 urls.append(followee.username)
                 storeProfile(followee.username, profilesOption)
