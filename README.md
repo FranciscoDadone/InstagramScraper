@@ -11,7 +11,7 @@ pip install -r requirements.txt
 
 To run the app, open a terminal and run:
 ```bash
-python3 scrape.py
+python3 scrap.py
 ```
 
 ![](unknown.png)
